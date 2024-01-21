@@ -21,6 +21,7 @@ export class ImageGallery extends Component {
     page: 1,
     status: STATUS.idle,
     error: null,
+	 total:0,
   };
 
   async componentDidUpdate(prevProps) {
@@ -48,9 +49,11 @@ export class ImageGallery extends Component {
 
     try {
       const images = await fetchImages(search, page);
-      this.setState(prevState => ({
+      console.log (images.length);
+		this.setState(prevState => ({
         images: [...prevState.images, ...images],
         status: STATUS.resolved,
+		  total: images.length,
       }));
     } catch (error) {
       this.setState({ status: STATUS.rejected, error });
@@ -58,7 +61,7 @@ export class ImageGallery extends Component {
   };
 
   render() {
-    const { images, status, error } = this.state;
+    const { images, status, error, total } = this.state;
 
     if (status === STATUS.idle) {
       return <div></div>;
@@ -83,7 +86,7 @@ export class ImageGallery extends Component {
 
         {status === STATUS.pending && <Loader />}
 
-        {status === STATUS.resolved && images.length !== 0 && (
+        {status !== STATUS.rejected && total > 0 && (
           <LoadButton type="button" onClick={this.loadMore}>
             Load more
           </LoadButton>
