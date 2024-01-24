@@ -29,22 +29,20 @@ export class App extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    const { search } = this.state;
+	const { search, page } = this.state;
 
-    if (prevState.search !== search) {
-      this.updateImages();
-    }
-  }
+	if (prevState.search !== search || prevState.page !==page) {
+	  this.updateImages();
+	}
+ }
 
-  loadMore = () => {
-    this.setState(
-      prevState => ({
-        page: prevState.page + 1,
-      }),
-
-      this.updateImages
-    );
-  };
+ loadMore = () => {
+	this.setState(
+	  prevState => ({
+		 page: prevState.page + 1,
+	  }),
+	);
+ };
 
   updateImages = async () => {
     const { page, search } = this.state;
