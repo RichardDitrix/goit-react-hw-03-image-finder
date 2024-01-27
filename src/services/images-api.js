@@ -1,4 +1,4 @@
-const API_KEY = '25536827-1d663420849b7b373b285294a';
+const API_KEY = '41880444-bb08a0e0a6474d92b688febd8';
 
 export const fetchImages = async (search, page) => {
   const results = await fetch(
